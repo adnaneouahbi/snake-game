@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Recuperation de la Position du petit bloc ROUGE (FOOD snake)
+
 export default (props) => {
 
   const style = {

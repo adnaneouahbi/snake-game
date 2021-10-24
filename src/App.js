@@ -1,6 +1,11 @@
+/// IMPORTATION DES FICHIERS ET COMPOSANTS REACT
+
 import React, { Component } from 'react';
 import Snake from './Snake';
 import Food from './Food';
+
+
+// FOOD ALEATOIRE DU SERPENT 
 
 const getRandomCoordinates = () => {
   let min = 1;
@@ -9,6 +14,8 @@ const getRandomCoordinates = () => {
   let y =  Math.floor((Math.random()*(max-min+1)+min)/2)*2;
   return [x,y]
 }
+
+// ETAT INITIAL DES CARACTERISTIQUES DU SERPENT
 
 const initialState = {
   food: getRandomCoordinates(),
@@ -19,6 +26,8 @@ const initialState = {
     [2,0]
   ]
 }
+
+// CLASSE APP POUR TOUS LES COMPOSANTS
 
 class App extends Component {
 
@@ -34,6 +43,8 @@ class App extends Component {
     this.checkIfCollapsed();
     this.checkIfEat();
   }
+
+// POUR DIRIGER LE SERPENT
 
   onKeyDown = (e) => {
     e = e || window.event;
@@ -52,6 +63,8 @@ class App extends Component {
         break;
     }
   }
+
+/// DEPLACEMENT DU SERPENT
 
   moveSnake = () => {
     let dots = [...this.state.snakeDots];
@@ -78,12 +91,16 @@ class App extends Component {
     })
   }
 
+ // MARGE POUR LE SERPENT
+
   checkIfOutOfBorders() {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
     if (head[0] >= 100 || head[1] >= 100 || head[0] < 0 || head[1] < 0) {
       this.onGameOver();
     }
   }
+
+
 
   checkIfCollapsed() {
     let snake = [...this.state.snakeDots];
@@ -95,6 +112,8 @@ class App extends Component {
       }
     })
   }
+
+// VERIFICATION APRES AVOIR PRIS UN FOOD
 
   checkIfEat() {
     let head = this.state.snakeDots[this.state.snakeDots.length - 1];
@@ -108,6 +127,8 @@ class App extends Component {
     }
   }
 
+// L'AGRANDISSEMENT DU SERPENT
+
   enlargeSnake() {
     let newSnake = [...this.state.snakeDots];
     newSnake.unshift([])
@@ -115,6 +136,8 @@ class App extends Component {
       snakeDots: newSnake
     })
   }
+
+// L'AUGMENTATION DE LA VITESSE
 
   increaseSpeed() {
     if (this.state.speed > 10) {
@@ -124,8 +147,12 @@ class App extends Component {
     }
   }
 
+
+
+  /// Alerte lorsque vous perdez!!
+
   onGameOver() {
-    alert(`Game Over. Snake length is ${this.state.snakeDots.length}`);
+    alert(`Perdu! la taille finale du serpent est : ${this.state.snakeDots.length}`);
     this.setState(initialState)
   }
 
@@ -138,5 +165,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
