@@ -19,19 +19,44 @@ const getRandomCoordinates = () => {
 
 const initialState = {
   food: getRandomCoordinates(),
-  speed: 200,
+  speed: 150,
   direction: 'RIGHT',
   snakeDots: [
     [0,0],
     [2,0]
   ]
 }
+const initialState2 = {
+  food: getRandomCoordinates(),
+  speed: 80,
+  direction: 'DOWN',
+  snakeDots: [
+    [0,2],
+    [2,0]
+  ]
+}
+
+
+/** 
+const initialState3 = {
+  food: getRandomCoordinates(),
+  speed: 50,
+  direction: 'DOWN',
+  snakeDots: [
+    [0,2],
+    [2,0]
+  ]
+}*/
+
 
 // CLASSE APP POUR TOUS LES COMPOSANTS
 
 class App extends Component {
 
   state = initialState;
+  state2 = initialState2;
+  //state3 = initialState3;
+  
 
   componentDidMount() {
     setInterval(this.moveSnake, this.state.speed);
@@ -100,7 +125,7 @@ class App extends Component {
     }
   }
 
-
+// SERPENT SE HEURTE AU OBSTACLE : CE QU IL ADVIENT!
 
   checkIfCollapsed() {
     let snake = [...this.state.snakeDots];
@@ -112,6 +137,8 @@ class App extends Component {
       }
     })
   }
+
+
 
 // VERIFICATION APRES AVOIR PRIS UN FOOD
 
@@ -125,7 +152,9 @@ class App extends Component {
       this.enlargeSnake();
       this.increaseSpeed();
     }
+  
   }
+
 
 // L'AGRANDISSEMENT DU SERPENT
 
@@ -137,23 +166,33 @@ class App extends Component {
     })
   }
 
+
+
+
 // L'AUGMENTATION DE LA VITESSE
 
   increaseSpeed() {
-    if (this.state.speed > 10) {
-      this.setState({
-        speed: this.state.speed - 10
-      })
+
+    if ( this.state.snakeDots.length == 4) {
+      this.setState(initialState2);
+      alert("Félications vous passez au niveau 2 ")
+      setInterval(this.moveSnake, this.state2.speed);
     }
+    /*
+    else if (this.state.snakeDots.length=6 )
+    {
+      this.setState(initialState3);
+      alert("Félications vous passez au niveau 3 ")
+      setInterval(this.moveSnake, this.state3.speed);
+    }
+    */
   }
-
-
 
   /// Alerte lorsque vous perdez!!
 
   onGameOver() {
     alert(`Perdu! la taille finale du serpent est : ${this.state.snakeDots.length}`);
-    this.setState(initialState)
+    this.setState(initialState);
   }
 
   render() {
@@ -165,6 +204,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;
